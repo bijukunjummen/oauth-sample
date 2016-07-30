@@ -1,0 +1,15 @@
+---
+applications:
+  - name: sample-authserver
+    path: build/libs/authserver-1.0.0-SNAPSHOT.jar
+    memory: 512M
+    env:
+      JAVA_OPTS: -Djava.security.egd=file:/dev/./urandom
+      SPRING_PROFILES_ACTIVE: cloud
+    services:
+      - auth_server_db
+
+buildpack: https://github.com/cloudfoundry/java-buildpack.git
+
+env:
+    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
