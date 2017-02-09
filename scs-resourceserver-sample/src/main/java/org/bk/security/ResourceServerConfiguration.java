@@ -17,6 +17,15 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
+//    @Bean
+//    public ResourceServerTokenServices tokenService() {
+//        RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
+//        remoteTokenServices.setCheckTokenEndpointUrl("http://localhost:8080/oauth/check_token");
+//        remoteTokenServices.setClientId("live-test");
+//        remoteTokenServices.setClientSecret("live-test-pwd");
+//        return remoteTokenServices;
+//    }
+
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();

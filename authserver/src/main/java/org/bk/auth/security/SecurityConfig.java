@@ -1,13 +1,17 @@
 package org.bk.auth.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
@@ -19,36 +23,42 @@ public class SecurityConfig {
     @Order(1)
     public static class BasicAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+        @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
         @Override
-        @Bean
         public AuthenticationManager authenticationManagerBean() throws Exception {
             return super.authenticationManagerBean();
         }
 
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            //@formatter:off
-            http
-                .authorizeRequests()
-                    .antMatchers("/index.html", "/home.html", "/", "/login", "/configprops", "/env", "/hystrix.stream", "/routes").permitAll()
-                .anyRequest().authenticated()
-                .and().formLogin().permitAll()
-                    .and()
-                    .csrf()
-                    .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
-                    .disable();
-            //@formatter:on
+            http.formLogin().loginPage("/login").permitAll().and().authorizeRequests()
+                    .anyRequest().authenticated();
         }
-
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.
-            inMemoryAuthentication()
-            .withUser("user").password("password").roles("USER").and()
-            .withUser("admin").password("password").roles("USER", "ADMIN");
+            //@formatter:off
+            auth
+                    .inMemoryAuthentication()
+                        .withUser("user")
+                        .password("password")
+                        .roles("USER")
+                    .and()
+                        .withUser("admin")
+                        .password("admin")
+                        .roles("USER", "ADMIN");
+            //@formatter:on
         }
+    }
 
+    @Configuration
+    @EnableResourceServer
+    protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+        @Override
+        public void configure(HttpSecurity http) throws Exception {
+            // @formatter:off
+			http.antMatcher("/me").authorizeRequests().anyRequest().authenticated();
+			// @formatter:on
+        }
     }
 }

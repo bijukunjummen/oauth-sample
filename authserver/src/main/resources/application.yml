@@ -1,15 +1,10 @@
 ---
-
 logging:
   level:
     root: INFO
+    org.springframework.security: DEBUG
 
-spring:
-  datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/authtestdb?autoReconnect=true&useSSL=false
-    username: authtest
-    password: authtest
-  jpa:
-    hibernate.ddl-auto: none
-    show_sql: true
+security:
+  ignored: /favicon.ico, /
+  basic:
+    enabled: false
