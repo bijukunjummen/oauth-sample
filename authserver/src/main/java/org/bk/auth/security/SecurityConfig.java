@@ -31,8 +31,13 @@ public class SecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.formLogin().loginPage("/login").permitAll().and().authorizeRequests()
-                    .anyRequest().authenticated();
+            //@formatter:off
+            http.authorizeRequests().antMatchers("/webjars/**").permitAll()
+                .and()
+                    .formLogin().loginPage("/login").permitAll()
+                .and()
+                    .logout().permitAll();
+            //@formatter:on
         }
 
         @Override

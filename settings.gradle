@@ -1,0 +1,2 @@
+rootProject.name="oauth-sample"
+include('authserver', 'client', 'resourceserver')

@@ -1,51 +1,13 @@
-buildscript {
-	ext {
-		springBootVersion = '1.4.2.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-	}
-}
-
-apply plugin: 'java'
-apply plugin: 'spring-boot'
 
 jar {
 	baseName = 'authserver'
 	version = '1.0.0-SNAPSHOT'
 }
 
-ext {
-	sourceCompatibility = 1.8
-	targetCompatibility = 1.8
-}
-
-repositories {
-	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
-}
-
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.security.oauth:spring-security-oauth2')
 	compile('org.springframework.security:spring-security-jwt')
-	compile('org.springframework.boot:spring-boot-starter-web')
-//	compile('mysql:mysql-connector-java')
-	compile('org.flywaydb:flyway-core')
-	compile('org.springframework.cloud:spring-cloud-spring-service-connector')
-	compile('org.springframework.cloud:spring-cloud-cloudfoundry-connector')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile("org.webjars:bootstrap:3.1.1")
 	compile("org.thymeleaf:thymeleaf-spring4")
 	compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
 	compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
-	compile("org.hsqldb:hsqldb")
-
 }

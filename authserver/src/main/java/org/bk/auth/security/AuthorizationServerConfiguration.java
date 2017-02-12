@@ -80,13 +80,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                     .withClient("live-test-pass")
                         .secret("live-test-pass")
                         .authorizedGrantTypes("password", "refresh_token")
-                        .scopes("sample.read").autoApprove("sample.read")
+                        .scopes("resource.read").autoApprove("resource.read")
                 .accessTokenValiditySeconds(3600)
                 .and()
                     .withClient("live-test-auth")
                         .secret("live-test-auth")
                         .authorizedGrantTypes("authorization_code", "refresh_token")
-                        .scopes("sample.read", "openid").autoApprove("sample.read", "openid")
+                        .scopes("resource.read", "openid").autoApprove("resource.read", "openid")
                 .accessTokenValiditySeconds(3600);
         //@formatter:on
     }
